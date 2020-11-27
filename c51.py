@@ -1,9 +1,10 @@
-import tensorflow.compat.v1 as tf
+import tensorflow as tf
 import numpy as np
 import random
 from collections import deque
 from config import C51DQNConfig
 from dnn_utils import lazy_property, dense, conv
+import math
 
 tf.compat.v1.disable_eager_execution()
 
@@ -53,6 +54,7 @@ class C51DQN:
             conv2 = conv(conv1, [3, 3, 6, 12], [12], [1, 2, 2, 1], w_i, b_i)
         with tf.variable_scope('flatten'):
             flatten = tf.contrib.layers.flatten(conv2) # # tf contrib layers assumes first dimension of tensor to flatten is batch size and preserves it. this is not the case with tf.layers.flatten
+            print("build_net Flatten shape: ", flatten.shape)
         with tf.variable_scope('dense1'):
             dense1 = dense(flatten, units_1, [units_1], w_i, b_i)
         with tf.variable_scope('dense2'):
@@ -72,7 +74,7 @@ class C51DQN:
         return -tf.reduce_sum(self.m_input * tf.log(self.p))
 
     def train(self, s, r, action, s_, gamma):
-        list_Q_ = [self.Q.eval(feed_dict={self.state: [s_], self.action_input: [[a]]}) for a in
+        list_Q_ = [self.Q.eval(feed_dict={self.state_input: [s_], self.action_input: [[a]]}) for a in
             range(self.action_dim)]
         a_ = tf.argmax(list_Q_).eval()
         m = np.zeros(self.atoms)

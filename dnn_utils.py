@@ -1,4 +1,4 @@
-import tensorflow.compat.v1 as tf
+import tensorflow as tf
 from tensorflow.python.framework import ops
 import functools
 
@@ -30,7 +30,11 @@ def dense(inputs, units, bias_shape, w_i, b_i=None, activation=tf.nn.relu):
     if len(inputs.shape) > 2:
       inputs = tf.contrib.layers.flatten(inputs) 
     flatten_shape = inputs.shape[1]
-    weights = tf.get_variable('weights', shape=[flatten_shape], initializer=w_i)
+    #print("dense inputs shape: ", inputs.shape)
+    #print("dense flatten_shape: ", flatten_shape)
+    
+    weights = tf.get_variable('weights', shape=[flatten_shape, 1], initializer=w_i)
+    #print("dense weights shape: ", weights.shape)
     dense = tf.matmul(inputs, weights)
     if bias_shape is not None:
       assert bias_shape[0] == units
