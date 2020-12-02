@@ -1,6 +1,7 @@
 ## Pacman with DQN and C51
 
 **Summary**
+
 This repository contains implementations of DQN and C51 on the classic
 Atari game called Pacman. We used the environment provided by OpenAI Gym.
 The goal of this project was to reproduce results first introduced in
@@ -23,7 +24,10 @@ training_videos: video captures of episodic training saved every n videos
 Presentation.pdf
 ```
 
-Code References: 
+**Results Summary**
+Todo: Add images under assets folder
+
+**Code References:**
 * https://github.com/MichaelSpencerA/atari-breakout-dqn
 * https://github.com/flyyufelix/C51-DDQN-Keras
 * https://github.com/Jash-R/ReinforcmentLearning-For-MsPacman (original starter code which fails to converge and contains bugs)
